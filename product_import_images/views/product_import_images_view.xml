@@ -7,11 +7,25 @@
         <field name="arch" type="xml">
 
             <form>
-                <field name="folder_path"/>
+                <field name="products">
+                    <tree>
+                        <field name="image" />
+                        <field name="name" />
+                        <field name="default_code" />
+                    </tree>
+                </field>
+
+                <footer>
+                    <field name="folder_path" />
+                    <button type="object" name="do_import_images"
+                            string="Import Images" class="oe_highlight"
+                            attrs="{'invisible':
+                                [('folder_path','=',False)]
+                            }" />
+                    <button special="cancel" string="Cancel"/>
+                </footer>
             </form>
-
         </field>
-
     </record>
 
     <act_window id="action_product_import_images"
