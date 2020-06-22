@@ -1,11 +1,10 @@
 from odoo import models, fields, api, exceptions
-import logging
+import io
 import zipfile
 import random
 import binascii
-from tkinter.filedialog import askdirectory
+from PIL import Image
 
-_logger = logging.getLogger(__name__)
 
 class ProductImportImages(models.TransientModel):
     _name = 'product.import.images'
@@ -14,9 +13,7 @@ class ProductImportImages(models.TransientModel):
     products = fields.Many2many(
             'product.template',
             string='Products')
-    folder_path = fields.Char("Images folder path",
-                              default='/home/sizis/odoo-dev/practice_addons/product_import_images/new_images.zip')
-    new_image = fields.Binary()
+    folder_bin = fields.Binary("Select ZIP folder")
 
     @api.model
     def default_get(self, field_names):
@@ -26,25 +23,42 @@ class ProductImportImages(models.TransientModel):
 
     def do_import_images(self):
         # self.ensure_one()
-        if not self.folder_path or self.folder_path[-4:] != '.zip':
-            raise exceptions.Warning('Invalid folder path!')
-        zf = zipfile.ZipFile(self.folder_path)
-        name_list = zf.namelist()
-        not_found_names = []
 
+        self.folder_bin = io.BytesIO(binascii.a2b_base64(self.folder_bin))
+        zf = zipfile.ZipFile(self.folder_bin)
+        name_list = zf.namelist()
+
+        not_found_names = []
         for prod in self.products:
             valid_names = []
             product_code = prod.default_code.lower()
             for name in name_list:
-                if name[:-4].lower() == product_code:
-                    if name.lower().endswith(('.jpg'.lower(), '.png'.lower())):
+                name_lower = name.lower()
+                if name_lower[:-4] == product_code:
+                    if name_lower.endswith(('.jpg'.lower(), '.png'.lower())):
                         valid_names.append(name)
+                        name_list.remove(name)
             if valid_names:
+                #import pudb; pudb.set_trace()
                 image_name = random.choice(valid_names)
-                bytes_data = zf.read(image_name)
-                base64_data = binascii.b2a_base64(bytes_data)
-                prod.write({'image': base64_data})
+                image_data = zf.read(image_name)
+                image_data = binascii.b2a_base64(image_data)
+                prod.write({'image': image_data})
             else:
                 not_found_names.append(prod.name)
-        # TODO popup with the not found images
+        # TODO popup with import info
         return True
+
+    @api.multi
+    def get_view(self):
+        view_id = self.env.ref('product_import_images.Import Product Images').id
+        return {
+            'name': 'Import Images',
+            'view_type': 'form',
+            'views': [(view_id, 'form')],
+            'res_model': 'product.import.images',
+            'view_id': view_id,
+            'type': 'ir.actions.act_window',
+            'res_id': self.id,
+            'target': 'new',
+        }
