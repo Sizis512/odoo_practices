@@ -19,13 +19,12 @@ var includeDict = {
 
     action_def: function () {
         var user = session.uid;
-        /*rpc.query({
+        rpc.query({
                 model: 'product.import.images',
                 method: 'get_view',
-                args: [[user],{'id':user}],
                 });
-*/
 
+/*
         var model_obj = new instance.web.Model('ir.model.data');
         var view_id = false;
         model_obj.call('get_object_reference',
@@ -38,7 +37,7 @@ var includeDict = {
         this.do_action({
             views: [[view_id, 'form']],
         });
-
+*/
     },
 };
 

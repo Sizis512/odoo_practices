@@ -7,15 +7,29 @@
                 view_mode="form"
                 target="new"
     />
+    <menuitem id="menu_inventory_import_images"
+              name="Import Images"
+              sequence="160"
+              parent="stock.menu_product_in_config_stock"
+              action="product_import_images.action_product_import_images"
+    />
+    <menuitem id="menu_manufacturing_import_images"
+              name="Import Product Images"
+              sequence="160"
+              parent="mrp.menu_mrp_configuration"
+              action="product_import_images.action_product_import_images"
+    />
 
     <record id="Import Product Images" model="ir.ui.view">
         <field name="name">Import Product Images</field>
         <field name="model">product.import.images</field>
         <field name="arch" type="xml">
 
+            <field name="folder_bin" filename="folder_name"/>
+            <field name="folder_name" invisible="1"/>
+
             <form>
                 <footer>
-                    <field name="folder_bin" />
                     <button type="object" name="do_import_images"
                             string="Import Images" class="oe_highlight"
                     />
