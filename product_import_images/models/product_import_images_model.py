@@ -2,7 +2,6 @@ from odoo import models, fields, api, exceptions
 import io
 import os
 import zipfile
-import random
 import base64
 
 
@@ -38,7 +37,7 @@ class ProductImportImages(models.TransientModel):
             while i < len(name_list):
                 name = name_list[i]
                 name_lower = name_list[i].lower()
-                if (name_lower.startswith(product_code))\
+                if (os.path.splitext(name_lower)[0].rsplit('-', 1)[0] == product_code)\
                         and (name_lower.endswith(('.jpg', '.png'))):
                     valid_images.append(name)
                     name_list.remove(name)
@@ -50,11 +49,12 @@ class ProductImportImages(models.TransientModel):
                 main_image_b64 = base64.b64encode(main_image)
                 update_dict = {'image': main_image_b64}
                 product_image_list = []
+                #self.env['product.image'].search([('name', '=', prod.default_code)]).unlink()
                 for image in valid_images:
-                    if not self.env['product.image'].search([('filename', '=', image)]):
+                    if not self.env['product.image'].search([('filename', '=', image[:-4])]):
                         product_image_dict = {'name': prod.default_code,
                                               'image': base64.b64encode(zf.read(image)),
-                                              'filename': image,
+                                              'filename': image[:-4],
                                               'product_tmpl_id': prod.id}
                         product_image_list.append([0, 0, product_image_dict])
                 update_dict['product_image_ids'] = product_image_list

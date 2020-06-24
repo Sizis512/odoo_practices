@@ -1,0 +1,115 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* product_import_images
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-24 13:26+0000\n"
+"PO-Revision-Date: 2020-06-24 13:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_import_images
+#: model:ir.ui.view,arch_db:product_import_images.Import Product Images
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: product_import_images
+#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
+msgid "Change main image"
+msgstr "Cambiar imagen pricipal"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: product_import_images
+#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
+msgid "Delete"
+msgstr "Borrar"
+
+#. module: product_import_images
+#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
+msgid "Delete main image"
+msgstr "Borrar imagen principal"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_image_filename
+msgid "File Name"
+msgstr "Nombre del archivo"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_folder_name
+msgid "Folder Name"
+msgstr "Nombre de la carpeta"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: product_import_images
+#: model:ir.ui.menu,name:product_import_images.menu_import_images
+#: model:ir.ui.view,arch_db:product_import_images.Import Product Images
+msgid "Import Images"
+msgstr "Importar Imágenes"
+
+#. module: product_import_images
+#: model:ir.actions.act_window,name:product_import_images.action_product_import_images
+#: model:ir.model,name:product_import_images.model_product_import_images
+msgid "Import Product Images"
+msgstr "Importar Imágenes de Productos"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización de"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_products
+msgid "Products"
+msgstr "Productos"
+
+#. module: product_import_images
+#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
+msgid "Select"
+msgstr "Seleccionar"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_folder_bin
+#: model:ir.ui.view,arch_db:product_import_images.Import Product Images
+msgid "Select ZIP folder"
+msgstr "Seleccionar carpeta ZIP"
+
+#. module: product_import_images
+#: model:ir.model,name:product_import_images.model_product_image
+msgid "product.image"
+msgstr "product.image"
+
