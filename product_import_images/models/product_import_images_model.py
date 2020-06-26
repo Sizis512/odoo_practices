@@ -9,27 +9,24 @@ class ProductImportImages(models.TransientModel):
     _name = 'product.import.images'
     _description = 'Import Product Images'
 
-    products = fields.Many2many(
-            'product.template',
-            string='Products')
-    folder_bin = fields.Binary("Select ZIP folder")
-    folder_name = fields.Char()
+    file_bin = fields.Binary("Select ZIP file", required=True)
+    file_name = fields.Char("Filename", required=True)
+    popup_message = fields.Char("Pop-up Message", readonly=True)
 
+    @api.multi
     def do_import_images(self):
         self.ensure_one()
-        if not self.folder_bin:
-            raise exceptions.Warning('Select a ZIP folder')
-        if not self.folder_name.lower().endswith('.zip'):
-            raise exceptions.Warning('Folder must be ZIP type')
-        self.folder_bin = io.BytesIO(base64.b64decode(self.folder_bin))
-        zf = zipfile.ZipFile(self.folder_bin)
+        if not self.file_name.lower().endswith('.zip'):
+            raise exceptions.Warning('File must be ZIP type')
+        self.file_bin = io.BytesIO(base64.b64decode(self.file_bin))
+        zf = zipfile.ZipFile(self.file_bin)
         name_list = zf.namelist()
 
-        self.products = self.env['product.template'].search([])
-        unchanged_images = 0
-        for prod in self.products:
+        products = self.env['product.template'].search([])
+        total_imported_images = 0
+        total_products_changed = 0
+        for prod in products:
             if not prod.default_code:
-                unchanged_images += 1
                 continue
             valid_images = []
             product_code = prod.default_code.lower()
@@ -37,7 +34,8 @@ class ProductImportImages(models.TransientModel):
             while i < len(name_list):
                 name = name_list[i]
                 name_lower = name_list[i].lower()
-                if (os.path.splitext(name_lower)[0].rsplit('-', 1)[0] == product_code)\
+                if (os.path.splitext(name_lower)[0].rsplit('-', 1)[0]
+                    == product_code) \
                         and (name_lower.endswith(('.jpg', '.png'))):
                     valid_images.append(name)
                     name_list.remove(name)
@@ -45,21 +43,39 @@ class ProductImportImages(models.TransientModel):
                     i += 1
             if valid_images:
                 valid_images.sort(key=len)
-                main_image = zf.read(valid_images[0])
-                main_image_b64 = base64.b64encode(main_image)
-                update_dict = {'image': main_image_b64}
+                update_dict = {}
+                has_main = self.env['product.template']\
+                    .search([('default_code', '=', product_code)]).image
+                if not has_main:
+                    main_image = zf.read(valid_images[0])
+                    main_image_b64 = base64.b64encode(main_image)
+                    update_dict['image'] = main_image_b64
                 product_image_list = []
-                #self.env['product.image'].search([('name', '=', prod.default_code)]).unlink()
                 for image in valid_images:
-                    if not self.env['product.image'].search([('filename', '=', image[:-4])]):
-                        product_image_dict = {'name': prod.default_code,
-                                              'image': base64.b64encode(zf.read(image)),
-                                              'filename': image[:-4],
-                                              'product_tmpl_id': prod.id}
-                        product_image_list.append([0, 0, product_image_dict])
+                    same_image = self.env['product.image'] \
+                            .search([('filename', '=', image[:-4])])
+                    if same_image:
+                        same_image.unlink()
+                    new_image = base64.b64encode(zf.read(image))
+                    product_image_dict = {'name': prod.default_code,
+                                          'image': new_image,
+                                          'filename': image[:-4],
+                                          'product_tmpl_id': prod.id}
+                    product_image_list.append([0, 0, product_image_dict])
+                    total_imported_images += 1
                 update_dict['product_image_ids'] = product_image_list
                 prod.write(update_dict)
-            else:
-                unchanged_images += 1
-        # TODO popup with import info
-        return True
+                total_products_changed += 1
+        message = "Successfully imported {} images into {} products."\
+            .format(total_imported_images, total_products_changed)
+        self.write({'popup_message': message})
+        popup_view_id = self.env.ref("product_import_images.popup_message_view").id
+        return {
+            'name': 'Success!',
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'product.import.images',
+            'res_id': self.id,
+            'views': [(popup_view_id, 'form')],
+            'target': 'new',
+        }

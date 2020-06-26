@@ -20,8 +20,8 @@
         <field name="arch" type="xml">
 
             <form>
-                <field name="folder_bin" filename="folder_name" string="Select ZIP folder"/>
-                <field name="folder_name" invisible="1"/>
+                <field name="file_bin" filename="file_name"/>
+                <field name="file_name" invisible="1"/>
 
                 <footer>
                     <button type="object" name="do_import_images"
@@ -32,4 +32,20 @@
             </form>
         </field>
     </record>
+
+    <record id="popup_message_view" model="ir.ui.view">
+        <field name="name">Message Form</field>
+        <field name="model">product.import.images</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <field name="popup_message"/>
+
+                <footer>
+                    <button string="Ok" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
 </odoo>
