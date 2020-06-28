@@ -5,10 +5,9 @@ import zipfile
 import base64
 
 
-class ProductImportImages(models.Model):
+class ProductImportImages(models.TransientModel):
     _name = 'product.import.images'
     _description = 'Import Product Images'
-    _auto = False
 
     file_bin = fields.Binary("Select ZIP file", required=True)
     file_name = fields.Char("Filename", required=True)
