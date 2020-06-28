@@ -1,13 +1,14 @@
-from odoo import models, fields, api, exceptions
+from odoo import models, fields, api, exceptions, _
 import io
 import os
 import zipfile
 import base64
 
 
-class ProductImportImages(models.TransientModel):
+class ProductImportImages(models.Model):
     _name = 'product.import.images'
     _description = 'Import Product Images'
+    _auto = False
 
     file_bin = fields.Binary("Select ZIP file", required=True)
     file_name = fields.Char("Filename", required=True)
@@ -17,7 +18,7 @@ class ProductImportImages(models.TransientModel):
     def do_import_images(self):
         self.ensure_one()
         if not self.file_name.lower().endswith('.zip'):
-            raise exceptions.Warning('File must be ZIP type')
+            raise exceptions.Warning(_('File must be ZIP type'))
         self.file_bin = io.BytesIO(base64.b64decode(self.file_bin))
         zf = zipfile.ZipFile(self.file_bin)
         name_list = zf.namelist()
@@ -45,7 +46,7 @@ class ProductImportImages(models.TransientModel):
                 valid_images.sort(key=len)
                 update_dict = {}
                 has_main = self.env['product.template']\
-                    .search([('default_code', '=', product_code)]).image
+                    .search([('default_code', '=', prod.default_code)]).image
                 if not has_main:
                     main_image = zf.read(valid_images[0])
                     main_image_b64 = base64.b64encode(main_image)
@@ -66,12 +67,16 @@ class ProductImportImages(models.TransientModel):
                 update_dict['product_image_ids'] = product_image_list
                 prod.write(update_dict)
                 total_products_changed += 1
-        message = "Successfully imported {} images into {} products."\
-            .format(total_imported_images, total_products_changed)
+        message = (_("Successfully imported ")
+                   + str(total_imported_images)
+                   + _(" images into ")
+                   + str(total_products_changed)
+                   + _(" products.")
+                   )
         self.write({'popup_message': message})
         popup_view_id = self.env.ref("product_import_images.popup_message_view").id
         return {
-            'name': 'Success!',
+            'name': 'Info',
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'res_model': 'product.import.images',

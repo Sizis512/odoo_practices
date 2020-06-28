@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-24 13:26+0000\n"
-"PO-Revision-Date: 2020-06-24 13:26+0000\n"
+"POT-Creation-Date: 2020-06-28 12:28+0000\n"
+"PO-Revision-Date: 2020-06-28 12:28+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,14 +16,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: product_import_images
+#: code:addons/product_import_images/models/product_import_images_model.py:71
+#, python-format
+msgid " images into "
+msgstr " imágenes en "
+
+#. module: product_import_images
+#: code:addons/product_import_images/models/product_import_images_model.py:73
+#, python-format
+msgid " products."
+msgstr " productos."
+
+#. module: product_import_images
 #: model:ir.ui.view,arch_db:product_import_images.Import Product Images
 msgid "Cancel"
 msgstr "Cancelar"
-
-#. module: product_import_images
-#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
-msgid "Change main image"
-msgstr "Cambiar imagen pricipal"
 
 #. module: product_import_images
 #: model:ir.model.fields,field_description:product_import_images.field_product_import_images_create_uid
@@ -36,16 +43,6 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: product_import_images
-#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
-msgid "Delete"
-msgstr "Borrar"
-
-#. module: product_import_images
-#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
-msgid "Delete main image"
-msgstr "Borrar imagen principal"
-
-#. module: product_import_images
 #: model:ir.model.fields,field_description:product_import_images.field_product_import_images_display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -56,9 +53,15 @@ msgid "File Name"
 msgstr "Nombre del archivo"
 
 #. module: product_import_images
-#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_folder_name
-msgid "Folder Name"
-msgstr "Nombre de la carpeta"
+#: code:addons/product_import_images/models/product_import_images_model.py:20
+#, python-format
+msgid "File must be ZIP type"
+msgstr "El archivo debe ser del tipo ZIP"
+
+#. module: product_import_images
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_file_name
+msgid "Filename"
+msgstr "Nombre de archivo"
 
 #. module: product_import_images
 #: model:ir.model.fields,field_description:product_import_images.field_product_import_images_id
@@ -93,20 +96,25 @@ msgid "Last Updated on"
 msgstr "Última actualización en"
 
 #. module: product_import_images
-#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_products
-msgid "Products"
-msgstr "Productos"
+#: model:ir.ui.view,arch_db:product_import_images.popup_message_view
+msgid "Ok"
+msgstr "Ok"
 
 #. module: product_import_images
-#: model:ir.ui.view,arch_db:product_import_images.images_inherited_view
-msgid "Select"
-msgstr "Seleccionar"
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_popup_message
+msgid "Pop-up Message"
+msgstr "Mensage Pop-up "
 
 #. module: product_import_images
-#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_folder_bin
-#: model:ir.ui.view,arch_db:product_import_images.Import Product Images
-msgid "Select ZIP folder"
-msgstr "Seleccionar carpeta ZIP"
+#: model:ir.model.fields,field_description:product_import_images.field_product_import_images_file_bin
+msgid "Select ZIP file"
+msgstr "Seleccione un archivo ZIP"
+
+#. module: product_import_images
+#: code:addons/product_import_images/models/product_import_images_model.py:69
+#, python-format
+msgid "Successfully imported "
+msgstr "Importadas correctamente "
 
 #. module: product_import_images
 #: model:ir.model,name:product_import_images.model_product_image

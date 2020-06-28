@@ -42,7 +42,7 @@
                 <field name="popup_message"/>
 
                 <footer>
-                    <button string="Ok" class="btn-default" special="cancel"/>
+                    <button string="OK" class="btn-default" special="cancel"/>
                 </footer>
             </form>
         </field>
