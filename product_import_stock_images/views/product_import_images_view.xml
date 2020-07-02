@@ -1,22 +1,25 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2020 Binovo IT Human Project SL
+License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
 <odoo>
 
     <act_window id="action_product_import_images"
                 name="Import Product Images"
-                res_model="product.import.images"
+                res_model="product.import.images.base"
                 view_mode="form"
                 target="new"
     />
-    <menuitem id="menu_import_images"
-              name="Import Images"
-              sequence="10"
-              parent="website_sale.menu_product_settings"
-              action="product_import_images.action_product_import_images"
+    <menuitem id="menu_stock_import_images"
+              name="Change Main Images"
+              sequence="50"
+              parent="stock.menu_product_in_config_stock"
+              action="product_import_stock_images.action_product_import_images"
     />
 
     <record id="Import Product Images" model="ir.ui.view">
         <field name="name">Import Product Images</field>
-        <field name="model">product.import.images</field>
+        <field name="model">product.import.images.base</field>
         <field name="arch" type="xml">
 
             <form>
@@ -24,7 +27,7 @@
                 <field name="file_name" invisible="1"/>
 
                 <footer>
-                    <button type="object" name="do_import_images"
+                    <button type="object" name="do_import_stock_images"
                             string="Import Images" class="oe_highlight"
                     />
                     <button special="cancel" string="Cancel"/>
@@ -35,7 +38,7 @@
 
     <record id="popup_message_view" model="ir.ui.view">
         <field name="name">Message Form</field>
-        <field name="model">product.import.images</field>
+        <field name="model">product.import.images.base</field>
         <field name="arch" type="xml">
 
             <form>
