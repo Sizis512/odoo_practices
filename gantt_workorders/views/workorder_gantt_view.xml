@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2020 Binovo IT Human Project SL
+License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="mrp_workorder_gantt_view" model="ir.ui.view">
+        <field name="name">workorder gantt view</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <ganttview start_date="date_planned_start"
+                       stop_date="date_planned_finished"
+                       create="false">
+
+            </ganttview>
+        </field>
+    </record>
+
+    <record id="mrp.mrp_workorder_todo" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,calendar,graph,kanban,ganttview</field>
+    </record>
+
+    <record id="mrp.action_mrp_workorder_production_specific" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,calendar,graph,ganttview</field>
+    </record>
+</odoo>

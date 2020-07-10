@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2020 Binovo IT Human Project SL
+License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="workorder_inherited_form_view" model="ir.ui.view">
+        <field name="name">Add parent_id</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit" />
+        <field name="arch" type="xml">
+
+            <field name="production_id" position="after">
+                <field name="next_work_order_id" invisible="1"/>
+                <field name="parent_id" domain="[('production_id', '=', production_id),
+                                                 ('id', '!=', id),
+                                                 ('id', '!=', next_work_order_id)]"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
