@@ -4,21 +4,22 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 
 <odoo>
 
-    <act_window id="action_product_import_images"
-                name="Import Product Images"
+    <act_window id="action_import_stock_product_images"
+                name="Import Stock Product Images"
                 res_model="product.import.images.base"
                 view_mode="form"
+                view_id="Import Stock Product Images"
                 target="new"
     />
     <menuitem id="menu_stock_import_images"
               name="Change Main Images"
               sequence="50"
               parent="stock.menu_product_in_config_stock"
-              action="product_import_stock_images.action_product_import_images"
+              action="product_import_stock_images.action_import_stock_product_images"
     />
 
-    <record id="Import Product Images" model="ir.ui.view">
-        <field name="name">Import Product Images</field>
+    <record id="Import Stock Product Images" model="ir.ui.view">
+        <field name="name">Import Stock Product Images</field>
         <field name="model">product.import.images.base</field>
         <field name="arch" type="xml">
 
