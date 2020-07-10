@@ -4,20 +4,6 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 
 <odoo>
 
-    <act_window id="action_import_website_product_images"
-                name="Import Website Product Images"
-                res_model="product.import.images.base"
-                view_mode="form"
-                view_id="Import Website Product Images"
-                target="new"
-    />
-    <menuitem id="menu_website_import_images"
-              name="Import Images"
-              sequence="10"
-              parent="website_sale.menu_product_settings"
-              action="product_import_website_images.action_import_website_product_images"
-    />
-
     <record id="Import Website Product Images" model="ir.ui.view">
         <field name="name">Import Website Product Images</field>
         <field name="model">product.import.images.base</field>
@@ -51,5 +37,19 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
             </form>
         </field>
     </record>
+
+    <act_window id="action_import_website_product_images"
+                name="Import Website Product Images"
+                res_model="product.import.images.base"
+                view_mode="form"
+                view_id="Import Website Product Images"
+                target="new"
+    />
+    <menuitem id="menu_website_import_images"
+              name="Import Images"
+              sequence="10"
+              parent="website_sale.menu_product_settings"
+              action="product_import_website_images.action_import_website_product_images"
+    />
 
 </odoo>
