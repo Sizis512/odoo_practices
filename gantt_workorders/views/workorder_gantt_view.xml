@@ -9,8 +9,7 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
         <field name="model">mrp.workorder</field>
         <field name="arch" type="xml">
             <ganttview start_date="date_planned_start"
-                       stop_date="date_planned_finished"
-                       create="false">
+                       stop_date="date_planned_finished">
 
             </ganttview>
         </field>

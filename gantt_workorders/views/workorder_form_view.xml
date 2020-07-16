@@ -12,9 +12,11 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 
             <field name="production_id" position="after">
                 <field name="next_work_order_id" invisible="1"/>
-                <field name="parent_id" domain="[('production_id', '=', production_id),
-                                                 ('id', '!=', id),
-                                                 ('id', '!=', next_work_order_id)]"/>
+                <field name="parent_id"
+                       domain="[('production_id', '=', production_id),
+                                ('id', '!=', id),
+                                ('id', '!=', parent_id)]"
+                       options="{'no_create_edit': True, 'no_create': True}"/>
             </field>
         </field>
     </record>

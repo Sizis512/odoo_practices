@@ -9,8 +9,12 @@
     'description': "",
     'license': 'OPL-1',
     'data': [
+        'views/assets.xml',
         'views/workorder_gantt_view.xml',
         'views/workorder_form_view.xml',
+    ],
+    'qweb': [
+        'static/src/xml/template.xml',
     ],
     'depends': ['mrp', 'ba_web_gantt'],
 }
