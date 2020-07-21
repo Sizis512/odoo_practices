@@ -2,7 +2,6 @@
 
     <t t-extend="GanttView.buttons">
         <t t-jquery="button.o-gantt-button-new" t-operation="replace">
-            <!--attribute name="invisible">1</attribute-->
             <button t-if="modelName != 'mrp.workorder'"
                     accesskey="c"
                     class="btn btn-primary btn-sm o-gantt-button-new"

@@ -16,10 +16,10 @@ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
     </record>
 
     <record id="mrp.mrp_workorder_todo" model="ir.actions.act_window">
-        <field name="view_mode">tree,form,calendar,graph,kanban,ganttview</field>
+        <field name="view_mode">kanban,tree,form,calendar,pivot,graph,ganttview</field>
     </record>
 
     <record id="mrp.action_mrp_workorder_production_specific" model="ir.actions.act_window">
-        <field name="view_mode">tree,form,calendar,graph,ganttview</field>
+        <field name="view_mode">tree,form,calendar,pivot,graph,ganttview</field>
     </record>
 </odoo>

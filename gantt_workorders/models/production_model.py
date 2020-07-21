@@ -9,8 +9,8 @@ class ProductionsModel(models.Model):
     _inherit = 'mrp.production'
 
     def button_plan(self):
-        super(ProductionsModel, self).button_plan()
-        for rec in self.env['mrp.workorder'].search([]):
+        ret = super(ProductionsModel, self).button_plan()
+        for rec in self.env['mrp.workorder'].search([('production_id', '=', self.id)]):
             rec.parent_id = rec.search([('next_work_order_id', '=', rec.id)])
             rec.user_id = rec.production_id.user_id
-            #rec.write({'parent_id': parent_id, 'user_id': rec.production_id.user_id})
+        return ret

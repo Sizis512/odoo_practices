@@ -8,13 +8,20 @@ from odoo import models, fields, api, exceptions, _
 class WorkOrdersModel(models.Model):
     _inherit = 'mrp.workorder'
 
-
     progress = fields.Integer(compute='_compute_progress')
     parent_id = fields.Many2one(comodel_name='mrp.workorder',
                                 string='Parent Work Order')
     user_id = fields.Many2one(comodel_name='res.users',
                               string='Responsible')
     # descendants = fields.One2many('mrp.workorder', 'parent_id', compute='_compute_descendants', store=True)
+
+    @api.model
+    def init_data(self):
+        for rec in self.search([]):
+            print(self.name)
+            rec.long_name = ("%s - %s - %s" % (rec.production_id.name, rec.product_id.name, rec.name))
+            rec.parent_id = rec.search([('next_work_order_id', '=', rec.id)])
+            rec.user_id = rec.production_id.user_id
 
     @api.one
     @api.depends('duration_percent')

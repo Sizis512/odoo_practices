@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-        <template id="assets_backend" name="web_ganttview assets" inherit_id="web.assets_backend">
+        <template id="assets_backend" name="custom assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/ba_web_gantt/static/src/js/load_extended_name.js"/>
+                <script type="text/javascript" src="/gantt_workorders/static/src/js/load_extended_name.js"/>
             </xpath>
          </template>
 
