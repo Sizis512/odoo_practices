@@ -13,7 +13,6 @@ class WorkOrdersModel(models.Model):
                                 string='Parent Work Order')
     user_id = fields.Many2one(comodel_name='res.users',
                               string='Responsible')
-    # descendants = fields.One2many('mrp.workorder', 'parent_id', compute='_compute_descendants', store=True)
 
     @api.model
     def init_data(self):
@@ -49,15 +48,6 @@ class WorkOrdersModel(models.Model):
             return True
         else:
             return super().write(values)
-
-    # @api.depends('next_work_order_id', 'next_work_order_id.descendants')
-    # def _compute_descendants(self):
-    #     if not self.next_work_order_id:
-    #         self.write({'descendants': [5, 0, 0]})
-    #     else:
-    #         if self.next_work_order_id.descendants:
-    #             self.write({'descendants': [6, 0, self.next_work_order_id.descendants]})
-    #         self.write({'descendants': [4, self.next_work_order_id, 0]})
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
