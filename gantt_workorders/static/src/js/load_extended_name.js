@@ -32,15 +32,14 @@ odoo.define('gantt_workorders.custom_feature', function (require) {
 
         //same as super but if in workorder uses 'display_name' instead of 'name'
         _processData: function (raw_data) {
-            this._super(raw_data);
-            if (this.modelName == 'mrp.workorder'){
-                for (let i = 0; i < this.chart.data.length; i++){
-                    var data = this.chart.data[i];
-                    var id = parseInt(data['id'], 10);
-                    var raw = raw_data.find(element => element.id === id);
-                    data['name'] = raw['display_name'];
-                    this.chart.data.splice(i, 1, data);
-                }
+            var self = this;
+            self._super(raw_data);
+            if (self.modelName == 'mrp.workorder') {
+                self.chart.data.forEach(function (data, i) {
+                    var id = Number(data.id);
+                    var raw = raw_data.find(function(element) {return element.id === id;});
+                    data.name = raw.display_name;
+                });
             }
         },
     });

@@ -18,8 +18,6 @@ class WorkOrdersModel(models.Model):
     @api.model
     def init_data(self):
         for rec in self.search([]):
-            print(self.name)
-            rec.long_name = ("%s - %s - %s" % (rec.production_id.name, rec.product_id.name, rec.name))
             rec.parent_id = rec.search([('next_work_order_id', '=', rec.id)])
             rec.user_id = rec.production_id.user_id
 
@@ -28,21 +26,29 @@ class WorkOrdersModel(models.Model):
     def _compute_progress(self):
         self.progress = 100 - self.duration_percent
 
+    def _parent_write(self, parent_id):
+        old_parent = self.parent_id
+        if old_parent:
+            old_parent.next_work_order_id = False
+        super().write({'parent_id': parent_id})
+        if self.parent_id:
+            new_parents_old_child = self.parent_id.next_work_order_id
+            if new_parents_old_child and new_parents_old_child != self:
+                new_parents_old_child.parent_id = False
+            self.parent_id.next_work_order_id = self
+        return True
+
     @api.multi
     def write(self, values):
-        if self._name == 'mrp.workorder' and 'parent_id' in values:
-            old_parent = self.parent_id
-            if old_parent:
-                old_parent.next_work_order_id = False
-            super(WorkOrdersModel, self).write(values)
-            if self.parent_id:
-                new_parents_old_child = self.parent_id.next_work_order_id
-                if new_parents_old_child and new_parents_old_child != self:
-                    new_parents_old_child.parent_id = False
-                self.parent_id.next_work_order_id = self
+        if 'parent_id' in values:
+            parent_id = values['parent_id']
+            del values['parent_id']
+            super().write(values)
+            for rec in self:
+                rec._parent_write(parent_id)
             return True
         else:
-            return super(WorkOrdersModel, self).write(values)
+            return super().write(values)
 
     # @api.depends('next_work_order_id', 'next_work_order_id.descendants')
     # def _compute_descendants(self):
